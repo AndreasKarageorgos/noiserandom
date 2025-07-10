@@ -1,7 +1,7 @@
 import cv2
 from os import sep
 from random import randint
-from secrets import choice
+from secrets import choice,randbits
 from string import ascii_letters,digits
 from time import sleep
 
@@ -15,7 +15,7 @@ def captureImage(path,total_images=1):
         raise Exception("Cannot open camera")
 
     ret,frame = cap.read()
-    sleep(1)
+    sleep((1 + 1/(randbits(6)+0.000001))) #Waits for the cam to open.
     for i in range(total_images):
         if not ret:
             raise Exception("Can't receive frame (stream end?). Exiting ...")

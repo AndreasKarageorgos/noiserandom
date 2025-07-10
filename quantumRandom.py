@@ -3,7 +3,7 @@ from captureImage import captureImage
 from secrets import choice
 from hashlib import sha512
 
-class secureRandom():
+class QuantumRandom():
     
     def __init__(self,path:str):
         self.path = path
@@ -12,7 +12,7 @@ class secureRandom():
 
     def randomInt(self):
         self.captureImages()
-        with open( choice(self.images), "rb") as f:
+        with open(choice(self.images), "rb") as f:
             data = f.read()
             f.close()
         self.deleteImages()
@@ -29,12 +29,3 @@ class secureRandom():
     def captureImages(self):
         self.images = self.images + captureImage(self.path,10)
         
-        
-            
-
-sr = secureRandom("images")
-
-number = sr.randomInt()
-
-
-print(number)
