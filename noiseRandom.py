@@ -1,7 +1,9 @@
 from os import walk,sep,remove
 from captureImage import captureImage
 from secrets import choice,randbits
+from hashlib import sha512
 import sys
+
 
 class NoiseRandom():
     
@@ -22,7 +24,9 @@ class NoiseRandom():
         self.__deleteImages()
         starting_image_index = data.find(b"\xFF\xDA")
         ending_image_index = data.find(b"\xFF\xD9")
-        data = data[starting_image_index+1:ending_image_index]
+        data = self.__scramble(data[starting_image_index+1:ending_image_index])
+        
+        
         sys.set_int_max_str_digits(len(data) * 3)
         return  int.from_bytes(data,"big")
     
@@ -79,4 +83,18 @@ class NoiseRandom():
     def __captureImages(self) -> None:
         for camera in self.cameras:
             self.images = self.images + captureImage(self.path,self.strength,camera=camera)
+
+    def __scramble(self,data):
+        byte_list = list(data)
+        data_size = len(byte_list)
+        scrambled_data = b""
+        for i in range(data_size*3):
+            p1 = randbits(4*8) % data_size
+            p2 = randbits(4*8) % data_size
+
+            byte_list[p1], byte_list[p2] = byte_list[p2], byte_list[p1]
+
+        for byte in byte_list:
+            scrambled_data += byte.to_bytes()
         
+        return scrambled_data

@@ -1,7 +1,6 @@
 import cv2
 from os import sep
-from random import randint
-from secrets import choice,randbits
+from secrets import randbits
 from time import sleep
 
 
