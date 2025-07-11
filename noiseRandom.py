@@ -1,28 +1,29 @@
 from os import walk,sep,remove
 from captureImage import captureImage
-from secrets import choice
+from secrets import choice,randbits
 import sys
 
 class NoiseRandom():
     
-    def __init__(self,path:str,strength=1):
+    def __init__(self,path:str,strength=1,cameras=[0]):
         self.path = path
         self.images = []
+        self.cameras = cameras
         self.strength = strength
         if(self.strength<1):
             self.strength = 1
         
 
     def randomInt(self) -> int:
-        self.captureImages()
+        self.__captureImages()
         with open(choice(self.images), "rb") as f:
             data = f.read()
             f.close()
-        self.deleteImages()
+        self.__deleteImages()
         starting_image_index = data.find(b"\xFF\xDA")
         ending_image_index = data.find(b"\xFF\xD9")
         data = data[starting_image_index+1:ending_image_index]
-        sys.set_int_max_str_digits(len(data) * 3)  #429496729
+        sys.set_int_max_str_digits(len(data) * 3)
         return  int.from_bytes(data,"big")
     
 
@@ -59,12 +60,23 @@ class NoiseRandom():
         new_int |= (1<<512*8-1)
         return new_int
 
+    def randomBytes(self,bytes:int) -> int:
+        random_number = self.randomInt()
+        num_bytes = (random_number.bit_length() + 7) //8
+        big_num_bytes = random_number.to_bytes(num_bytes,"big")
 
-    def deleteImages(self):
+        random_bytes = [choice(big_num_bytes) for _ in range(bytes)]
+        new_int =  int.from_bytes(random_bytes,"big")
+
+        new_int |= (1<<bytes*8-1)
+        return new_int
+
+    def __deleteImages(self) -> None:
         for image_path in self.images:
             remove(image_path)
         self.images.clear()
 
-    def captureImages(self):
-        self.images = self.images + captureImage(self.path,self.strength)
+    def __captureImages(self) -> None:
+        for camera in self.cameras:
+            self.images = self.images + captureImage(self.path,self.strength,camera=camera)
         

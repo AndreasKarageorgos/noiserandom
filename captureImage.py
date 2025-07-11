@@ -6,9 +6,9 @@ from time import sleep
 
 
 
-def captureImage(path,total_images=1):
+def captureImage(path,total_images=1,camera=0):
     image_names = []
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(camera)
 
     if not cap.isOpened():
         raise Exception("Cannot open camera")
