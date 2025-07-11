@@ -72,6 +72,8 @@ This list should provide a clear overview of the effects that contribute to imag
 
 ## How to use
 
+### Example 1
+
     #Firts import it
 
     from noiseRandom import NoiseRandom
@@ -81,11 +83,32 @@ This list should provide a clear overview of the effects that contribute to imag
     path = "images" #This must be an existing folder
 
     #After that create your object
-    noise_random = NoiseRandom(path=path,strength=10) #The strength is the number of images
+    noise_random = NoiseRandom(path=path,strength=10) #The strength is the number of images (min=1)
 
     #Get your random number
 
     random_number = noise_random.randomInt()
+
+    #print your random number
+
+    print(random_number)
+
+### Example 2
+
+    #Firts import it
+
+    from noiseRandom import NoiseRandom
+
+    #Then write the path that the images are going to be saved
+
+    path = "images" #This must be an existing folder
+
+    #After that create your object
+    noise_random = NoiseRandom(path=path,strength=10) #The strength is the number of images (min=1)
+
+    #Get your random number
+
+    random_number = noise_random.random2048()
 
     #print your random number
 
