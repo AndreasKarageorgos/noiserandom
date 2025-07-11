@@ -1,4 +1,4 @@
-from quantumRandom import QuantumRandom
+from noiseRandom import NoiseRandom
 from os import path,mkdir
 
 
@@ -8,8 +8,8 @@ try:
 except FileExistsError:
     pass
 
-qRandom = QuantumRandom(path=path)
+nRandom = NoiseRandom(path=path)
 
-random_number = qRandom.randomInt()
+random_number = nRandom.randomInt()
 
 print(random_number)

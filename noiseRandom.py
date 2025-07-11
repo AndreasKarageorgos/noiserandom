@@ -3,7 +3,7 @@ from captureImage import captureImage
 from secrets import choice
 from hashlib import sha512
 
-class QuantumRandom():
+class NoiseRandom():
     
     def __init__(self,path:str):
         self.path = path
