@@ -2,7 +2,6 @@ import cv2
 from os import sep
 from random import randint
 from secrets import choice,randbits
-from string import ascii_letters,digits
 from time import sleep
 
 
@@ -22,7 +21,7 @@ def captureImage(path,total_images=1):
         else:
             ret,frame = cap.read()
             # Save the captured image
-            image_name = path + sep + "".join([choice(ascii_letters+digits) for _ in range(randint(13,60))]) + ".jpg"
+            image_name = path + sep + str(i) + ".jpg"
             image_names.append(image_name)
             cv2.imwrite(image_name, frame)
     cap.release()
