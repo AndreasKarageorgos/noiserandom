@@ -1,5 +1,5 @@
 # Noise-Based-Random-Number-Generator
-This random number generator produces truly random numbers by leveraging quantum effects captured as noise in low-tech cameras. By exploiting the inherent unpredictability of quantum noise, it generates high-quality, truly random numbers.
+This random number generator leverages the inherent noise found in images captured by low-tech cameras to produce truly random numbers.
 
 
 ## How it works
