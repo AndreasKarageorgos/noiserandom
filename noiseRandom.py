@@ -5,9 +5,12 @@ from hashlib import sha512
 
 class NoiseRandom():
     
-    def __init__(self,path:str):
+    def __init__(self,path:str,strength=1):
         self.path = path
         self.images = []
+        self.strength = strength
+        if(self.strength<1):
+            self.strength = 1
         
 
     def randomInt(self):
@@ -15,7 +18,7 @@ class NoiseRandom():
         with open(choice(self.images), "rb") as f:
             data = f.read()
             f.close()
-        self.deleteImages()
+        #self.deleteImages()
         starting_image_index = data.find(b"\xFF\xDA")
         ending_image_index = data.find(b"\xFF\xD9")
         digest = sha512(data[starting_image_index+1:ending_image_index]).digest()
@@ -27,5 +30,5 @@ class NoiseRandom():
         self.images.clear()
 
     def captureImages(self):
-        self.images = self.images + captureImage(self.path,10)
+        self.images = self.images + captureImage(self.path,self.strength)
         

@@ -20,6 +20,7 @@ def captureImage(path,total_images=1):
         if not ret:
             raise Exception("Can't receive frame (stream end?). Exiting ...")
         else:
+            ret,frame = cap.read()
             # Save the captured image
             image_name = path + sep + "".join([choice(ascii_letters+digits) for _ in range(randint(13,60))]) + ".jpg"
             image_names.append(image_name)

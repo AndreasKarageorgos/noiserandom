@@ -69,3 +69,24 @@ This video shows the output from my laptop camera while it was physically covere
 Each of these factors contributes to the overall noise level in the final image. In high-end cameras, many of these sources are mitigated through advanced sensor designs, cooling systems, and image processing algorithms. Low-tech cameras, however, often expose these weaknesses more clearly, resulting in images with a higher noise floor especially under conditions of low light or high gain.
 
 This list should provide a clear overview of the effects that contribute to image noise in lower-performing camera systems.
+
+## How to use
+
+    #Firts import it
+
+    from noiseRandom import NoiseRandom
+
+    #Then write the path that the images are going to be saved
+
+    path = "images" #This must be an existing folder
+
+    #After that create your object
+    noise_random = NoiseRandom(path=path,strength=10) #The strength is the number of images
+
+    #Get your random number
+
+    random_number = noise_random.randomInt()
+
+    #print your random number
+
+    print(random_number)
