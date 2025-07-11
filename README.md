@@ -1,6 +1,9 @@
 # Noise-Based-Random-Number-Generator
 This random number generator leverages the inherent noise found in images captured by low-tech cameras to produce truly random numbers.
 
+## Dependencies
+
+    pip install opencv-python
 
 ## How it works
 
