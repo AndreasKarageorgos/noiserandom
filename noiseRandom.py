@@ -18,7 +18,7 @@ class NoiseRandom():
         with open(choice(self.images), "rb") as f:
             data = f.read()
             f.close()
-        #self.deleteImages()
+        self.deleteImages()
         starting_image_index = data.find(b"\xFF\xDA")
         ending_image_index = data.find(b"\xFF\xD9")
         digest = sha512(data[starting_image_index+1:ending_image_index]).digest()
