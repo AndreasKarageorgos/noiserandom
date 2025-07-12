@@ -3,6 +3,8 @@ from captureImage import captureImage
 from secrets import choice,randbits
 from hashlib import sha512
 import sys
+import numpy as np
+from array import array
 
 
 class NoiseRandom():
@@ -16,64 +18,37 @@ class NoiseRandom():
             self.strength = 1
         
 
-    def randomInt(self) -> int:
+    def randomInt(self,getBytes=False)->int|bytes:
         self.__captureImages()
         with open(choice(self.images), "rb") as f:
             data = f.read()
             f.close()
         self.__deleteImages()
+        if(getBytes):
+            return data
         starting_image_index = data.find(b"\xFF\xDA")
         ending_image_index = data.find(b"\xFF\xD9")
         data = self.__scramble(data[starting_image_index+1:ending_image_index])
-        
-        
         sys.set_int_max_str_digits(len(data) * 3)
         return  int.from_bytes(data,"big")
     
-
-    def random1024(self) -> int:
-        random_number = self.randomInt()
-        num_bytes = (random_number.bit_length() + 7) //8
-        big_num_bytes = random_number.to_bytes(num_bytes,"big")
-
-        random_bytes = [choice(big_num_bytes) for _ in range(128)]
-        new_int =  int.from_bytes(random_bytes,"big")
-
-        new_int |= (1<<128*8-1)
-        return new_int
-
-    def random2048(self) -> int:
-        random_number = self.randomInt()
-        num_bytes = (random_number.bit_length() + 7) //8
-        big_num_bytes = random_number.to_bytes(num_bytes,"big")
-
-        random_bytes = [choice(big_num_bytes) for _ in range(256)]
-        new_int =  int.from_bytes(random_bytes,"big")
-
-        new_int |= (1<<256*8-1)
-        return new_int
+    def random1024(self)->int:
+        return self.randomBytes(1024//8)
     
-    def random4096(self) -> int:
-        random_number = self.randomInt()
-        num_bytes = (random_number.bit_length() + 7) //8
-        big_num_bytes = random_number.to_bytes(num_bytes,"big")
+    def random2048(self)->int:
+        return self.randomBytes(2048//8)
 
-        random_bytes = [choice(big_num_bytes) for _ in range(512)]
-        new_int =  int.from_bytes(random_bytes,"big")
+    def random4096(self)->int:
+        return self.randomBytes(4096//8)
 
-        new_int |= (1<<512*8-1)
-        return new_int
-
-    def randomBytes(self,bytes:int) -> int:
-        random_number = self.randomInt()
-        num_bytes = (random_number.bit_length() + 7) //8
-        big_num_bytes = random_number.to_bytes(num_bytes,"big")
-
-        random_bytes = [choice(big_num_bytes) for _ in range(bytes)]
-        new_int =  int.from_bytes(random_bytes,"big")
-
-        new_int |= (1<<bytes*8-1)
-        return new_int
+    def randomBytes(self,total_bytes:int) -> int:
+        random_pool = list(self.randomInt(True))
+        selected_bytes = [choice(random_pool) & 0xFF for _ in range(total_bytes)]
+        selected_bytes[0] |= (1<<7)
+        for i in range(len(selected_bytes)):
+            selected_bytes[i] = selected_bytes[i].to_bytes(1,byteorder="big",signed=False)
+        selected_bytes = b"".join(selected_bytes)
+        return int.from_bytes(selected_bytes,"big",signed=False)
 
     def __deleteImages(self) -> None:
         for image_path in self.images:
