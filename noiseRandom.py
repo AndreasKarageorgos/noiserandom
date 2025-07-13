@@ -24,14 +24,22 @@ class NoiseRandom():
             data = f.read()
             f.close()
         self.__deleteImages()
-        if(getBytes):
-            return data
         starting_image_index = data.find(b"\xFF\xDA")
         ending_image_index = data.find(b"\xFF\xD9")
         data = self.__scramble(data[starting_image_index+1:ending_image_index])
+        if(getBytes):
+            return data
         sys.set_int_max_str_digits(len(data) * 3)
-        return  int.from_bytes(data,"big")
+        return  int.from_bytes(data,"big",signed=False)
     
+    def randomBytes(self,total_bytes:int) -> int:
+        if(total_bytes<=0):
+            raise ValueError("The value of total_bytes can't be 0 or less.")
+        random_pool = self.randomInt(True)
+        selected_bytes = [choice(random_pool) & 0xFF for _ in range(total_bytes)]
+        selected_bytes[0] |= (1<<7)
+        return int.from_bytes(selected_bytes,"big",signed=False)
+
     def random1024(self)->int:
         return self.randomBytes(1024//8)
     
@@ -40,15 +48,6 @@ class NoiseRandom():
 
     def random4096(self)->int:
         return self.randomBytes(4096//8)
-
-    def randomBytes(self,total_bytes:int) -> int:
-        random_pool = list(self.randomInt(True))
-        selected_bytes = [choice(random_pool) & 0xFF for _ in range(total_bytes)]
-        selected_bytes[0] |= (1<<7)
-        for i in range(len(selected_bytes)):
-            selected_bytes[i] = selected_bytes[i].to_bytes(1,byteorder="big",signed=False)
-        selected_bytes = b"".join(selected_bytes)
-        return int.from_bytes(selected_bytes,"big",signed=False)
 
     def __deleteImages(self) -> None:
         for image_path in self.images:
