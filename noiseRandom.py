@@ -4,9 +4,6 @@ from secrets import choice,randbits
 from gmpy2 import is_prime as isprime
 import sys
 
-
-
-
 class NoiseRandom():
     
     def __init__(self,path:str,strength=1,cameras=[0]):
@@ -17,7 +14,6 @@ class NoiseRandom():
         if(self.strength<1):
             self.strength = 1
         
-
     def randomInt(self,getBytes=False)->int|bytes:
         self.__captureImages()
         with open(choice(self.images), "rb") as f:
@@ -80,7 +76,6 @@ class NoiseRandom():
         for camera in self.cameras:
             self.images = self.images + captureImage(self.path,self.strength,camera=camera)
         
-
     def __scramble(self,data):
         byte_list = list(data)
         data_size = len(byte_list)
