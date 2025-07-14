@@ -1,10 +1,9 @@
-from os import walk,sep,remove
+from os import remove
 from captureImage import captureImage
 from secrets import choice,randbits
-from hashlib import sha512
+from sympy import isprime
 import sys
-import numpy as np
-from array import array
+
 
 
 class NoiseRandom():
@@ -48,7 +47,21 @@ class NoiseRandom():
 
     def random4096(self)->int:
         return self.randomBytes(4096//8)
-
+    
+    def randomPrime(self,total_bytes:int) -> int:
+        if(total_bytes<=0):
+            raise ValueError("The value of total_bytes can't be 0 or less.")
+        random_pool = self.randomInt(True)
+        selected_bytes = [choice(random_pool) & 0xFF for _ in range(total_bytes)]
+        selected_bytes[0] |= (1<<7)
+        prime_number = int.from_bytes(selected_bytes,"big",signed=False)
+        while(not isprime(prime_number)):
+            selected_bytes = [choice(random_pool) & 0xFF for _ in range(total_bytes)]
+            selected_bytes[0] |= (1<<7)
+            prime_number = int.from_bytes(selected_bytes,"big",signed=False)
+        return prime_number
+        
+              
     def __deleteImages(self) -> None:
         for image_path in self.images:
             remove(image_path)
@@ -57,6 +70,7 @@ class NoiseRandom():
     def __captureImages(self) -> None:
         for camera in self.cameras:
             self.images = self.images + captureImage(self.path,self.strength,camera=camera)
+        
 
     def __scramble(self,data):
         byte_list = list(data)
