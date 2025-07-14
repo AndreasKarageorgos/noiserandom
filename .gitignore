@@ -4,3 +4,4 @@ test*
 *.pyc
 build*
 dist*
+build.sh

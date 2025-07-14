@@ -7,5 +7,6 @@ setup(
     install_requires=[
         "opencv-python",
         "gmpy2"
-    ]
+    ],
+    license="MIT License"
 )
