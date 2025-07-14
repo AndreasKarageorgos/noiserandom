@@ -4,6 +4,7 @@ This random number generator leverages the inherent noise found in images captur
 ## Dependencies
 
     pip install opencv-python
+    pip install gmpy2
 
 ## How it works
 

@@ -1,8 +1,9 @@
 from os import remove
 from captureImage import captureImage
 from secrets import choice,randbits
-from sympy import isprime
+from gmpy2 import is_prime as isprime
 import sys
+
 
 
 
@@ -38,15 +39,6 @@ class NoiseRandom():
         selected_bytes = [choice(random_pool) & 0xFF for _ in range(total_bytes)]
         selected_bytes[0] |= (1<<7)
         return int.from_bytes(selected_bytes,"big",signed=False)
-
-    def random1024(self)->int:
-        return self.randomBytes(1024//8)
-    
-    def random2048(self)->int:
-        return self.randomBytes(2048//8)
-
-    def random4096(self)->int:
-        return self.randomBytes(4096//8)
     
     def randomPrime(self,total_bytes:int) -> int:
         if(total_bytes<=0):
@@ -60,7 +52,24 @@ class NoiseRandom():
             selected_bytes[0] |= (1<<7)
             prime_number = int.from_bytes(selected_bytes,"big",signed=False)
         return prime_number
-        
+
+    def random1024(self)->int:
+        return self.randomBytes(1024//8)
+    
+    def random2048(self)->int:
+        return self.randomBytes(2048//8)
+
+    def random4096(self)->int:
+        return self.randomBytes(4096//8)
+    
+    def randomPrime1024(self):
+        return self.randomPrime(1024//8)
+
+    def randomPrime2048(self):
+        return self.randomPrime(2048//8)
+    
+    def randomPrime4096(self):
+        return self.randomPrime(4096//8)
               
     def __deleteImages(self) -> None:
         for image_path in self.images:
