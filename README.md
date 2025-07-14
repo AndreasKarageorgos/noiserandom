@@ -11,11 +11,6 @@ The program captures multiple images in JPG format and randomly selects one to g
 It utilizes images because older, low-tech cameras often contain significant white noise, which is a result of different random effects. Since those phenomena are inherently random, and if the camera is pointed at a dynamic scene such as a fish tank, a street, a forest , etc, the combination of a randomly chosen image and naturally occurring noise makes the process extremely difficult to reverse engineer.
 
 
-This video shows the output from my laptop camera while it was physically covered. The visual noise is clearly observable.
-    
-* [Video](https://youtu.be/WqcqhsS5VLI)
-
-
 ## List of noises.
 
 * Shot Noise
@@ -76,7 +71,7 @@ This list should provide a clear overview of the effects that contribute to imag
 
     #Firts import it
 
-    from noiseRandom import NoiseRandom
+    from NoiseRandom import NoiseRandom
 
     #Then write the path that the images are going to be saved
 
@@ -97,7 +92,7 @@ This list should provide a clear overview of the effects that contribute to imag
 
     #Firts import it
 
-    from noiseRandom import NoiseRandom
+    from NoiseRandom import NoiseRandom
 
     #Then write the path that the images are going to be saved
 
