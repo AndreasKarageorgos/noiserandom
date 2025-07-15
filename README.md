@@ -67,7 +67,7 @@ This list should provide a clear overview of the effects that contribute to imag
 
 ## How to use
 
-### Example 1
+### Example 1 (Random Integer)
 
     #Firts import it
 
@@ -88,7 +88,7 @@ This list should provide a clear overview of the effects that contribute to imag
 
     print(random_number)
 
-### Example 2
+### Example 2 (Random Integer with 2048 bits)
 
     #Firts import it
 
@@ -108,3 +108,47 @@ This list should provide a clear overview of the effects that contribute to imag
     #print your random number
 
     print(random_number)
+
+### Example 3 (Random Prime Integer with 2048 bits)
+
+
+    #Firts import it
+
+    from noiserandom import NoiseRandom
+
+    #Then write the path that the images are going to be saved
+
+    path = "images" #This must be an existing folder
+
+    #After that create your object
+    noise_random = NoiseRandom(path=path,strength=10) #The strength is the number of images (min=1)
+
+    #Get your random number
+
+    random_number = noise_random.randomPrime2048()
+
+    #print your random number
+
+    print(random_number)
+
+### Example 4 (Get the bytes of the image scrambled)
+
+
+    #Firts import it
+
+    from noiserandom import NoiseRandom
+
+    #Then write the path that the images are going to be saved
+
+    path = "images" #This must be an existing folder
+
+    #After that create your object
+    noise_random = NoiseRandom(path=path,strength=10) #The strength is the number of images (min=1)
+
+    #Get your bytes
+
+    random_bytes = noise_random.randomInt(True)
+
+    #print your bytes
+
+    print(random_bytes)

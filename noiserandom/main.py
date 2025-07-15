@@ -13,7 +13,7 @@ def captureImage(path,total_images=1,camera=0):
         raise Exception("Cannot open camera")
 
     ret,frame = cap.read()
-    sleep((1 + 1/(randbits(6)+0.000001))) #Waits for the cam to open.
+    sleep((1 + 1/(randbits(16)+0.000001))) #Waits for the cam to open.
     for i in range(total_images):
         if not ret:
             raise Exception("Can't receive frame (stream end?). Exiting ...")
@@ -38,7 +38,7 @@ class NoiseRandom():
         if(self.strength<1):
             self.strength = 1
         
-    def randomInt(self,getBytes=False)->int|bytes:
+    def randomInt(self,get_bytes=False)->int|bytes:
         self.__captureImages()
         with open(choice(self.images), "rb") as f:
             data = f.read()
@@ -47,17 +47,19 @@ class NoiseRandom():
         starting_image_index = data.find(b"\xFF\xDA")
         ending_image_index = data.find(b"\xFF\xD9")
         data = self.__scramble(data[starting_image_index+1:ending_image_index])
-        if(getBytes):
+        if(get_bytes):
             return data
         sys.set_int_max_str_digits(len(data) * 3)
         return  int.from_bytes(data,"big",signed=False)
     
-    def randomBytes(self,total_bytes:int) -> int:
+    def randomBytes(self,total_bytes:int,get_bytes=False) -> int|bytes:
         if(total_bytes<=0):
             raise ValueError("The value of total_bytes can't be 0 or less.")
         random_pool = self.randomInt(True)
         selected_bytes = [choice(random_pool) & 0xFF for _ in range(total_bytes)]
         selected_bytes[0] |= (1<<7)
+        if(get_bytes):
+            return bytes(selected_bytes)
         return int.from_bytes(selected_bytes,"big",signed=False)
     
     def randomPrime(self,total_bytes:int) -> int:
