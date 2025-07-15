@@ -1,3 +1,12 @@
+Metadata-Version: 2.1
+Name: noiserandom
+Version: 1.4
+Home-page: https://github.com/AndreasKarageorgos/noiserandom
+Author: Andreas Karageorgos
+License: MIT
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
 # Noise-Based-Random-Number-Generator
 This random number generator leverages the inherent noise found in images captured by low-tech cameras to produce truly random numbers.
 

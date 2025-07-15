@@ -4,9 +4,9 @@ with open("README.md", "r") as readme:
     description = readme.read()
 
 setup(
-    name="NoiseRandom",
+    name="noiserandom",
     author="Andreas Karageorgos",
-    version="1.1",
+    version="1.4",
     packages=find_packages(),
     install_requires=[
         "opencv-python",
@@ -15,5 +15,5 @@ setup(
     license="MIT",
     long_description=description,
     long_description_content_type="text/markdown",
-    url="https://github.com/AndreasKarageorgos/NoiseRandom/"
+    url="https://github.com/AndreasKarageorgos/noiserandom"
 )
