@@ -5,6 +5,7 @@ import sys
 import cv2
 from time import sleep
 
+# Captures Images
 def captureImage(path,total_images=1,camera=0):
     image_names = []
     cap = cv2.VideoCapture(camera)

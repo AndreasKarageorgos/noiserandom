@@ -11,7 +11,11 @@ The program captures multiple images in JPG format and randomly selects one to g
 It utilizes images because older, low-tech cameras often contain significant white noise, which is a result of different random effects. Since those phenomena are inherently random, and if the camera is pointed at a dynamic scene such as a fish tank, a street, a forest , etc, the combination of a randomly chosen image and naturally occurring noise makes the process extremely difficult to reverse engineer.
 
 
-## List of noises.
+## Noises.
+
+Each of these factors contributes to the overall noise level in the final image. In high-end cameras, many of these sources are mitigated through advanced sensor designs, cooling systems, and image processing algorithms. Low-tech cameras, however, often expose these weaknesses more clearly, resulting in images with a higher noise floor especially under conditions of low light or high gain.
+
+This list should provide a clear overview of the effects that contribute to image noise in lower-performing camera systems.
 
 * Shot Noise
 
@@ -60,10 +64,6 @@ It utilizes images because older, low-tech cameras often contain significant whi
     * What it is: Electromagnetic interference from nearby electronic components or poor shielding can add stray signals into the sensor’s output.
 
     * Why it’s significant: In less advanced camera designs, insufficient electromagnetic shielding can result in visible noise patterns or erratic pixel behavior.
-
-Each of these factors contributes to the overall noise level in the final image. In high-end cameras, many of these sources are mitigated through advanced sensor designs, cooling systems, and image processing algorithms. Low-tech cameras, however, often expose these weaknesses more clearly, resulting in images with a higher noise floor especially under conditions of low light or high gain.
-
-This list should provide a clear overview of the effects that contribute to image noise in lower-performing camera systems.
 
 ## How to use
 
