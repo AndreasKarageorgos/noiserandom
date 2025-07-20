@@ -5,7 +5,7 @@ import sys
 import cv2
 from time import sleep
 
-# Captures Images
+# Captures Images 
 def captureImage(path,total_images=1,camera=0):
     image_names = []
     cap = cv2.VideoCapture(camera)
@@ -100,8 +100,7 @@ class NoiseRandom():
         self.images.clear()
 
     def __captureImages(self) -> None:
-        for camera in self.cameras:
-            self.images = self.images + captureImage(self.path,self.strength,camera=camera)
+        self.images = self.images + captureImage(self.path,self.strength,camera=choice(self.cameras))
         
     def __scramble(self,data):
         byte_list = list(data)

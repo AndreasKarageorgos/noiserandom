@@ -7,3 +7,4 @@ dist*
 build.sh
 noiserandom.egg-info*
 .ipynb_checkpoints*
+Documentation.ipynb
