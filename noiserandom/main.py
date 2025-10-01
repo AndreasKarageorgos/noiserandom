@@ -31,7 +31,9 @@ def captureImage(path,total_images=1,camera=0):
 
 class NoiseRandom():
     
-    def __init__(self,path:str,strength=1,cameras=[0]):
+    def __init__(self,path:str,strength=1,cameras=[0],disable_scramble=False,disable_delete_images=False):
+        self.disable_scramble = disable_scramble
+        self.disable_delete_images = disable_delete_images
         self.path = path
         self.images = []
         self.cameras = cameras
@@ -44,7 +46,8 @@ class NoiseRandom():
         with open(choice(self.images), "rb") as f:
             data = f.read()
             f.close()
-        self.__deleteImages()
+        if(not self.disable_delete_images):
+            self.__deleteImages()
         starting_image_index = data.find(b"\xFF\xDA")
         ending_image_index = data.find(b"\xFF\xD9")
         data = self.__scramble(data[starting_image_index+1:ending_image_index])
@@ -95,6 +98,8 @@ class NoiseRandom():
         return self.randomPrime(4096//8)
               
     def __deleteImages(self) -> None:
+        if(self.disable_delete_images):
+            return None
         for image_path in self.images:
             remove(image_path)
         self.images.clear()
