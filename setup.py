@@ -6,11 +6,12 @@ with open("README.md", "r") as readme:
 setup(
     name="noiserandom",
     author="Andreas Karageorgos",
-    version="1.6",
+    version="2",
     packages=find_packages(),
     install_requires=[
         "opencv-python",
-        "gmpy2"
+        "gmpy2",
+        "pycryptodome"
     ],
     license="MIT",
     long_description=description,

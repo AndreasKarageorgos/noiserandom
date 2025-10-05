@@ -4,6 +4,7 @@ from gmpy2 import is_prime as isprime
 import sys
 import cv2
 from time import sleep
+from Crypto.PublicKey import RSA
 
 # Captures Images 
 def captureImage(path,total_images=1,camera=0):
@@ -56,7 +57,7 @@ class NoiseRandom():
         sys.set_int_max_str_digits(len(data) * 3)
         return  int.from_bytes(data,"big",signed=False)
     
-    def randomBytes(self,total_bytes:int,get_bytes=False) -> int|bytes:
+    def randomBytes(self,total_bytes:int,get_bytes=True) -> int|bytes:
         if(total_bytes<=0):
             raise ValueError("The value of total_bytes can't be 0 or less.")
         random_pool = self.randomInt(True)
@@ -78,24 +79,51 @@ class NoiseRandom():
             selected_bytes[0] |= (1<<7)
             prime_number = int.from_bytes(selected_bytes,"big",signed=False)
         return prime_number
+    
+    def generate_rsa_keys(self,p, q, e=65537, private_key_name="private.pem", public_key_name="public.pem"):
+        # Compute modulus
+        n = p * q
+        phi = (p - 1) * (q - 1)
+
+        # Ensure e and phi are coprime
+        from math import gcd
+        if gcd(e, phi) != 1:
+            raise ValueError("e and phi(n) are not coprime. Choose another prime pair or e.")
+
+        # Compute private exponent d
+        d = pow(e, -1, phi)
+
+        # Construct the RSA key manually
+        key = RSA.construct((n, e, d, p, q))
+
+        # Export keys in PEM format
+        private_pem = key.export_key()
+        public_pem = key.publickey().export_key()
+
+        with open(private_key_name, "wb") as pkey:
+            pkey.write(private_pem)
+            pkey.close()
+        with open(public_key_name, "wb") as pkey:
+            pkey.write(public_pem)
+            pkey.close()
 
     def random1024(self)->int:
-        return self.randomBytes(1024//8)
+        return self.randomBytes(1024//8,False)
     
     def random2048(self)->int:
-        return self.randomBytes(2048//8)
+        return self.randomBytes(2048//8,False)
 
     def random4096(self)->int:
-        return self.randomBytes(4096//8)
+        return self.randomBytes(4096//8,False)
     
     def randomPrime1024(self):
-        return self.randomPrime(1024//8)
+        return self.randomPrime(1024//8,False)
 
     def randomPrime2048(self):
-        return self.randomPrime(2048//8)
+        return self.randomPrime(2048//8,False)
     
     def randomPrime4096(self):
-        return self.randomPrime(4096//8)
+        return self.randomPrime(4096//8,False)
               
     def __deleteImages(self) -> None:
         if(self.disable_delete_images):
