@@ -6,7 +6,7 @@ with open("README.md", "r") as readme:
 setup(
     name="noiserandom",
     author="Andreas Karageorgos",
-    version="2",
+    version="2.1",
     packages=find_packages(),
     install_requires=[
         "opencv-python",

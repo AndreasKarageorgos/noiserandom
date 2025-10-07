@@ -22,7 +22,7 @@ def captureImage(path,total_images=1,camera=0):
         else:
             ret,frame = cap.read()
             # Save the captured image
-            image_name = path + sep + str(i) + ".jpg"
+            image_name = path + sep + str(i) + ".bmp"
             image_names.append(image_name)
             cv2.imwrite(image_name, frame)
     cap.release()
@@ -49,8 +49,8 @@ class NoiseRandom():
             f.close()
         if(not self.disable_delete_images):
             self.__deleteImages()
-        starting_image_index = data.find(b"\xFF\xDA")
-        ending_image_index = data.find(b"\xFF\xD9")
+        starting_image_index = 0 #data.find(b"\xFF\xDA")
+        ending_image_index = -1 #data.find(b"\xFF\xD9")
         data = self.__scramble(data[starting_image_index+1:ending_image_index])
         if(get_bytes):
             return data
@@ -117,13 +117,13 @@ class NoiseRandom():
         return self.randomBytes(4096//8,False)
     
     def randomPrime1024(self):
-        return self.randomPrime(1024//8,False)
+        return self.randomPrime(1024//8)
 
     def randomPrime2048(self):
-        return self.randomPrime(2048//8,False)
+        return self.randomPrime(2048//8)
     
     def randomPrime4096(self):
-        return self.randomPrime(4096//8,False)
+        return self.randomPrime(4096//8)
               
     def __deleteImages(self) -> None:
         if(self.disable_delete_images):
